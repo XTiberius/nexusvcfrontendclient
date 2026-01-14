@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { Company } from '@/api/localApi';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ export default function Portfolio() {
 
   const { data: companies = [], isLoading } = useQuery({
     queryKey: ['companies'],
-    queryFn: () => base44.entities.Company.filter({ status: 'active' }, '-created_date', 100),
+    queryFn: () => Company.filter({ status: 'active' }, '-created_date', 100),
   });
 
   const filteredCompanies = companies.filter(company => {

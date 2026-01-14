@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { Investment, Company, Deal, User as Auth } from '@/api/localApi';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const getUser = async () => {
-      const userData = await base44.auth.me();
+      const userData = await Auth.me();
       setUser(userData);
     };
     getUser();
@@ -40,18 +40,18 @@ export default function Dashboard() {
 
   const { data: investments = [], isLoading: investmentsLoading } = useQuery({
     queryKey: ['my-investments', user?.email],
-    queryFn: () => base44.entities.Investment.filter({ created_by: user?.email }, '-created_date', 50),
+    queryFn: () => Investment.filter({ created_by: user?.email }, '-created_date', 50),
     enabled: !!user?.email,
   });
 
   const { data: companies = [] } = useQuery({
     queryKey: ['companies'],
-    queryFn: () => base44.entities.Company.list('-created_date', 100),
+    queryFn: () => Company.list('-created_date', 100),
   });
 
   const { data: deals = [] } = useQuery({
     queryKey: ['deals'],
-    queryFn: () => base44.entities.Deal.list('-created_date', 100),
+    queryFn: () => Deal.list('-created_date', 100),
   });
 
   const getCompany = (companyId) => companies.find(c => c.id === companyId);

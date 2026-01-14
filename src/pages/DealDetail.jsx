@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { Deal, Company, NDA, Investment, User as Auth } from '@/api/localApi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
@@ -48,10 +48,10 @@ export default function DealDetail() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const authed = await base44.auth.isAuthenticated();
+      const authed = await Auth.isAuthenticated();
       setIsAuthenticated(authed);
       if (authed) {
-        const userData = await base44.auth.me();
+        const userData = await Auth.me();
         setUser(userData);
       }
     };
@@ -61,7 +61,7 @@ export default function DealDetail() {
   const { data: deal, isLoading: dealLoading } = useQuery({
     queryKey: ['deal', dealId],
     queryFn: async () => {
-      const deals = await base44.entities.Deal.filter({ id: dealId });
+      const deals = await Deal.filter({ id: dealId });
       return deals[0];
     },
     enabled: !!dealId,
@@ -70,7 +70,7 @@ export default function DealDetail() {
   const { data: company } = useQuery({
     queryKey: ['company', deal?.company_id],
     queryFn: async () => {
-      const companies = await base44.entities.Company.filter({ id: deal.company_id });
+      const companies = await Company.filter({ id: deal.company_id });
       return companies[0];
     },
     enabled: !!deal?.company_id,
@@ -79,7 +79,7 @@ export default function DealDetail() {
   const { data: nda, refetch: refetchNDA } = useQuery({
     queryKey: ['nda', dealId, user?.email],
     queryFn: async () => {
-      const ndas = await base44.entities.NDA.filter({ 
+      const ndas = await NDA.filter({ 
         deal_id: dealId, 
         user_email: user.email 
       });
@@ -90,7 +90,7 @@ export default function DealDetail() {
 
   const investMutation = useMutation({
     mutationFn: async (amount) => {
-      return base44.entities.Investment.create({
+      return Investment.create({
         deal_id: dealId,
         company_id: deal.company_id,
         amount: parseFloat(amount),
@@ -109,7 +109,7 @@ export default function DealDetail() {
 
   const signNDAMutation = useMutation({
     mutationFn: async () => {
-      return base44.entities.NDA.create({
+      return NDA.create({
         deal_id: dealId,
         user_email: user.email,
         agreed_at: new Date().toISOString(),
@@ -425,7 +425,7 @@ export default function DealDetail() {
               ) : (
                 <div className="space-y-3">
                   <Button 
-                    onClick={() => base44.auth.redirectToLogin()} 
+                    onClick={() => Auth.redirectToLogin()} 
                     className="w-full bg-[#00ff88] text-black hover:bg-[#00cc6a] h-12 font-medium"
                   >
                     Sign In to Invest

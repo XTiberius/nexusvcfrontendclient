@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { base44 } from '@/api/base44Client';
+import { AccessRequest } from '@/api/localApi';
 import { useMutation } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
@@ -78,7 +78,7 @@ export default function RequestAccess() {
   });
 
   const submitMutation = useMutation({
-    mutationFn: (data) => base44.entities.AccessRequest.create(data),
+    mutationFn: (data) => AccessRequest.create(data),
     onSuccess: () => setSubmitted(true),
   });
 

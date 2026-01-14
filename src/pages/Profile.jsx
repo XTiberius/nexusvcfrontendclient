@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { User as Auth, Entity } from '@/api/localApi';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
@@ -26,7 +26,7 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await base44.auth.me();
+      const userData = await Auth.me();
       setUser(userData);
     };
     fetchUser();
@@ -34,7 +34,7 @@ export default function Profile() {
 
   const { data: entities = [], isLoading } = useQuery({
     queryKey: ['entities', user?.email],
-    queryFn: () => base44.entities.Entity.filter({ created_by: user.email }),
+    queryFn: () => Entity.filter({ created_by: user.email }),
     enabled: !!user?.email,
   });
 

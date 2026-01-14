@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { Entity } from '@/api/localApi';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,7 +35,7 @@ export default function AddEntityDialog({ open, onOpenChange }) {
 
   const createEntityMutation = useMutation({
     mutationFn: async (data) => {
-      return base44.entities.Entity.create(data);
+      return Entity.create(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['entities']);
