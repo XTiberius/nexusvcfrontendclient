@@ -1,4 +1,4 @@
-# Base44 App
+# local host UI
 
 
 This app was created automatically by Base44.
