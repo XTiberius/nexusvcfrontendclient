@@ -16,26 +16,26 @@ import {
 
 const team = [
   {
-    name: 'Alexandra Chen',
+    name: 'Luc Goble',
     role: 'Managing Partner',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop',
     bio: 'Former Goldman Sachs VP, Stanford MBA'
   },
   {
-    name: 'Marcus Williams',
-    role: 'Partner, Deal Sourcing',
+    name: 'Preston Silverman',
+    role: 'Managing Partner',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
     bio: 'Ex-Sequoia, 15 years in VC'
   },
   {
-    name: 'Sarah Park',
-    role: 'Partner, Operations',
+    name: 'David Monroe Rashid',
+    role: 'Strategic Advisor',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop',
-    bio: 'Former COO at Series D startup'
+    bio: 'davidrashid.com'
   },
   {
-    name: 'David Kumar',
-    role: 'Principal',
+    name: 'Rutvik Parikh',
+    role: 'Technical Advisor',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
     bio: 'Deep tech specialist, PhD MIT'
   },
